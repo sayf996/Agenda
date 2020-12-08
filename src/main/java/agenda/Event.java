@@ -15,9 +15,11 @@ public class Event {
     private LocalDateTime myStart;
 
     /**
-     * The durarion of the event 
+     * The duration of the event 
      */
     private Duration myDuration;
+    
+
 
 
     /**
@@ -31,6 +33,8 @@ public class Event {
         this.myTitle = title;
         this.myStart = start;
         this.myDuration = duration;
+        
+        
     }
 
     /**
@@ -40,9 +44,14 @@ public class Event {
      * @return true if the event occurs on that day, false otherwise
      */
     public boolean isInDay(LocalDate aDay) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        boolean isInDay = false;
+
+        if (aDay.compareTo(myStart.toLocalDate()) >= 0){
+            isInDay = true;
+        }
+        return isInDay;
     }
+            
    
     /**
      * @return the myTitle
