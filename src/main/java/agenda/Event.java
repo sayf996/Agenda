@@ -19,6 +19,7 @@ public class Event {
      */
     private Duration myDuration;
     
+    private LocalDateTime myEnd;
 
 
 
@@ -43,12 +44,13 @@ public class Event {
      * @param aDay the day to test
      * @return true if the event occurs on that day, false otherwise
      */
-    public boolean isInDay(LocalDate aDay) {
+    public boolean isInDay(LocalDate aDay) { 
         boolean isInDay = false;
-
-        if (aDay.compareTo(myStart.toLocalDate()) >= 0){
+        myEnd = myStart.plus(myDuration);
+        if (aDay.compareTo(myStart.toLocalDate()) >= 0 && aDay.compareTo(myEnd.toLocalDate()) <= 0){
             isInDay = true;
-        }
+        } 
+        
         return isInDay;
     }
             
@@ -73,6 +75,15 @@ public class Event {
      */
     public Duration getDuration() {
         return myDuration;
+    }
+    
+    /**
+     *
+     * @return
+     */
+    @Override
+    public String toString() {
+        return getTitle();
     }
 
    
