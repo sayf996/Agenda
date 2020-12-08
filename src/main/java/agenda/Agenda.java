@@ -2,18 +2,25 @@ package agenda;
 
 import java.time.LocalDate;
 import java.util.*;
-
+import agenda.Event;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 /**
  * Description : An agenda that stores events
  */
 public class Agenda {
+    
+    List<Event> listeEvents;
+    public Agenda(){
+        listeEvents = new LinkedList();
+    }
     /**
      * Adds an event to this agenda
      *
      * @param e the event to add
      */
     public void addEvent(Event e) {
-        // TODO : implémenter cette méthode
+        listeEvents.add(e);
         throw new UnsupportedOperationException("Pas encore implémenté");
     }
 
@@ -24,7 +31,14 @@ public class Agenda {
      * @return and iteraror to the events that occur on that day
      */
     public List<Event> eventsInDay(LocalDate day) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        List<Event> eventsOfTheDay = new LinkedList();
+        for (int i=0; i<listeEvents.size();i++){
+          LocalDate debut = listeEvents.get(i).getStart().toLocalDate();
+          LocalDate fin = debut.plus(listeEvents.get(i).getDuration());
+          if(day.equals(debut) || (day.isAfter(debut) && day.isBefore(fin))){
+              eventsOfTheDay.add(listeEvents.get(i));
+          }
+        }
+        return eventsOfTheDay;
     }
 }
