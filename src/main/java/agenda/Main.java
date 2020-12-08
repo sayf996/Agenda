@@ -20,10 +20,15 @@ public class Main {
      */
     public static void main(String[] args) {
         LocalDateTime start = LocalDateTime.of(2020, 12, 8, 18, 30);
-        Duration duration = Duration.ofHours(2);
+        Duration duration = Duration.ofHours(8);
         Event event = new Event("event",  start, duration);
-        System.out.println(event.isInDay(LocalDate.of(2020, 12, 9)));
-        System.out.println(event.isInDay(LocalDate.of(2020, 12, 8)));
+        for (int i = 7; i < 11; i++){
+        if (event.isInDay(LocalDate.of(2020, 12, i))) {
+            System.out.println("YOU HAVE AN EVENT THIS DAY!");
+        } else {
+            System.out.println("There is no Event in that day");
+        }}
+        
     }
     
 }
