@@ -48,5 +48,19 @@ public class RepetitiveEvent extends Event {
     public ChronoUnit getFrequency() {
         return frequency;   
     }
+    
+    @Override 
+    public boolean isInDay(LocalDate day){
+        if(exceptions.contains(day)){
+            return false;
+        }
+        // Dernière date d'event avant le day
+        LocalDateTime closestStart = this.getStart();
+        while(closestStart.toLocalDate().isBefore(day)){
+            closestStart = closestStart.plus(1, frequency);
+        } 
+        return day.compareTo(closestStart.toLocalDate()) >= 0 && day.compareTo(closestStart.plus(this.getDuration()).toLocalDate()) <= 0;
+    
+    }
 
 }

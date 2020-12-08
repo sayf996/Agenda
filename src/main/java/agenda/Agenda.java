@@ -20,8 +20,7 @@ public class Agenda {
      * @param e the event to add
      */
     public void addEvent(Event e) {
-        listeEvents.add(e);
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        listeEvents.add(e);        
     }
 
     /**
@@ -32,12 +31,15 @@ public class Agenda {
      */
     public List<Event> eventsInDay(LocalDate day) {
         List<Event> eventsOfTheDay = new LinkedList();
-        for (int i=0; i<listeEvents.size();i++){
-          LocalDate debut = listeEvents.get(i).getStart().toLocalDate();
+        for (int i=0; i<listeEvents.size();i++){            
+            if (listeEvents.get(i).isInDay(day)){
+                eventsOfTheDay.add(listeEvents.get(i));
+            }
+          /*LocalDate debut = listeEvents.get(i).getStart().toLocalDate();
           LocalDate fin = debut.plus(listeEvents.get(i).getDuration());
           if(day.equals(debut) || (day.isAfter(debut) && day.isBefore(fin))){
               eventsOfTheDay.add(listeEvents.get(i));
-          }
+          }*/
         }
         return eventsOfTheDay;
     }

@@ -3,6 +3,7 @@ package agenda;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.temporal.ChronoUnit;
 
 /**
@@ -11,7 +12,8 @@ import java.time.temporal.ChronoUnit;
  */
 public class FixedTerminationEvent extends RepetitiveEvent {
 
-    
+    LocalDate terminationInclusive;
+    long numberOfOccurrences;
     /**
      * Constructs a fixed terminationInclusive event ending at a given date
      *
@@ -27,9 +29,8 @@ public class FixedTerminationEvent extends RepetitiveEvent {
      * @param terminationInclusive the date when this event ends
      */
     public FixedTerminationEvent(String title, LocalDateTime start, Duration duration, ChronoUnit frequency, LocalDate terminationInclusive) {
-         super(title, start, duration, frequency);
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        super(title, start, duration, frequency);
+        this.terminationInclusive = terminationInclusive;
 
     }
 
@@ -49,8 +50,8 @@ public class FixedTerminationEvent extends RepetitiveEvent {
      */
     public FixedTerminationEvent(String title, LocalDateTime start, Duration duration, ChronoUnit frequency, long numberOfOccurrences) {
         super(title, start, duration, frequency);
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        this.numberOfOccurrences = numberOfOccurrences;
+        //throw new UnsupportedOperationException("Pas encore implémenté");
     }
 
     /**
@@ -58,13 +59,37 @@ public class FixedTerminationEvent extends RepetitiveEvent {
      * @return the termination date of this repetitive event
      */
     public LocalDate getTerminationDate() {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");   
+        if(terminationInclusive != null){
+            return terminationInclusive;
+        }  
+        else{
+            return getStart().toLocalDate().plus(numberOfOccurrences-1, frequency);
+        }
     }
 
     public long getNumberOfOccurrences() {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        if(numberOfOccurrences != 0){
+            return numberOfOccurrences; 
+        }
+        else{
+            return frequency.between(getStart().toLocalDate(), terminationInclusive)+1;
+        }
     }
-        
+    
+    @Override 
+    public boolean isInDay(LocalDate day){
+        if(exceptions.contains(day)){
+            return false;
+        }
+        // Dernière date d'event avant le day
+        LocalDateTime closestStart = this.getStart();
+        // On vérifie qu'on ne dépasse pas le nombre d'occurrences ou la date limite
+        long occurrences = 0;
+        while(closestStart.toLocalDate().isBefore(day) && closestStart.toLocalDate().isBefore(terminationInclusive) && occurrences < numberOfOccurrences ){
+            closestStart = closestStart.plus(1, frequency);
+            occurrences++;
+        } 
+        return day.compareTo(closestStart.toLocalDate()) >= 0 && day.compareTo(closestStart.plus(this.getDuration()).toLocalDate()) <= 0;
+    
+    }
 }
