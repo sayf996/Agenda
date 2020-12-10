@@ -76,20 +76,5 @@ public class FixedTerminationEvent extends RepetitiveEvent {
         }
     }
     
-    @Override 
-    public boolean isInDay(LocalDate day){
-        if(exceptions.contains(day)){
-            return false;
-        }
-        // Dernière date d'event avant le day
-        LocalDateTime closestStart = this.getStart();
-        // On vérifie qu'on ne dépasse pas le nombre d'occurrences ou la date limite
-        long occurrences = 0;
-        while(closestStart.toLocalDate().isBefore(day) && closestStart.toLocalDate().isBefore(terminationInclusive) && occurrences < numberOfOccurrences ){
-            closestStart = closestStart.plus(1, frequency);
-            occurrences++;
-        } 
-        return day.compareTo(closestStart.toLocalDate()) >= 0 && day.compareTo(closestStart.plus(this.getDuration()).toLocalDate()) <= 0;
     
-    }
 }
