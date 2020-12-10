@@ -3,6 +3,7 @@ package agenda;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,6 +24,8 @@ public class EventTest {
     // A simple event
     // November 1st, 2020, 22:30, 89 minutes
     Event simple = new Event("Simple event", nov_1__2020_22_30, min_89);
+    LocalTime time = LocalTime.of(22, 30);
+    LocalTime time2 = LocalTime.of(07, 30);
     
     // An event overlapping two days
     // November 1st, 2020, 22:30, 120 minutes
@@ -49,5 +52,9 @@ public class EventTest {
     public void toStringShowsEventTitle() {
         assertTrue(simple.toString().contains("Simple event"), "toString() doit montrer le titre de l'événements");
     }
-    
+    @Test
+    public void isInHour(){
+        assertTrue(simple.isInHour(time), "Un événement a lieu dans son jour de début");
+        assertFalse(simple.isInHour(time2), "Un événement a lieu dans son jour de début");
+    }
 }

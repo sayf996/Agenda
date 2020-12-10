@@ -1,6 +1,7 @@
 package agenda;
 
 import java.time.*;
+import java.util.function.BooleanSupplier;
 
 public class Event {
 
@@ -53,6 +54,15 @@ public class Event {
         
         return isInDay;
     }
+    public boolean isInHour(LocalTime T) { 
+        boolean isInHour = false;
+        myEnd = myStart.plus(myDuration);
+        if (T.compareTo(myStart.toLocalTime()) >= 0 && T.compareTo(myEnd.toLocalTime()) <= 0){
+            isInHour = true;
+        } 
+        
+        return isInHour;
+    }
             
    
     /**
@@ -85,6 +95,8 @@ public class Event {
     public String toString() {
         return getTitle();
     }
+
+   
 
    
     

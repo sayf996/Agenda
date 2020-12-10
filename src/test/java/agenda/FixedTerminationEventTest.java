@@ -53,8 +53,8 @@ public class FixedTerminationEventTest {
 
     @Test
     public void eventOccurs10WeeksAfter() {
-        assertTrue(fixedTermination.isInDay(nov_1_2020.plus(6, ChronoUnit.WEEKS)), "Cet événement se produit toutes les semaines");
-        assertTrue(fixedRepetitions.isInDay(nov_1_2020.plus(6, ChronoUnit.WEEKS)), "Cet événement se produit toutes les semaines");
+        assertTrue(fixedTermination.isInDay(nov_1_2020.plus(10, ChronoUnit.WEEKS)), "Cet événement se produit toutes les semaines");
+        assertTrue(fixedRepetitions.isInDay(nov_1_2020.plus(10, ChronoUnit.WEEKS)), "Cet événement se produit toutes les semaines");
     }
 
     @Test

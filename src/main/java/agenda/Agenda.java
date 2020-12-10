@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.*;
 import agenda.Event;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 /**
  * Description : An agenda that stores events
@@ -43,4 +45,36 @@ public class Agenda {
         }
         return eventsOfTheDay;
     }
+    public List<Event> findByTitle(String title) {
+        List<Event> findByTitle = new LinkedList();
+        for (int i=0; i<listeEvents.size();i++){
+            if(listeEvents.get(i).toString().contains(title)){
+                findByTitle.add(listeEvents.get(i));  
+            }
+        }
+        return findByTitle;
+        
+    }
+    
+    /**
+     * Déterminer s’il y a de la place dans l'agenda pour un événement
+     * @param e L'événement à tester (on se limitera aux événements simples)
+     * @return vrai s’il y a de la place dans l'agenda pour cet événement
+     */
+    public boolean isFreeFor(Event e) {
+            boolean isFreeFor = true;
+            LocalDateTime start = e.getStart();
+            for (int i=0; i<listeEvents.size();i++) {
+                if(!e.isInHour(start.toLocalTime())){
+                    isFreeFor = false;
+                    break;
+                }
+            }
+            return isFreeFor;
+        }
 }
+        
+
+        
+    
+
